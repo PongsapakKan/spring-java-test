@@ -1,30 +1,31 @@
-package com.userinfo.models.api.response;
+package com.userinfo.models.api.response.error;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class ApiError {
     private final int status;
     private final String message;
-    private List<FieldError> fieldErrors = new ArrayList<>();
+    private final String reason;
+    private List<CustomFieldError> fieldErrors = new ArrayList<>();
 
-    public ApiError(String message, int status) {
+    public ApiError(String message, int status, String reason) {
         this.status = status;
         this.message = message;
+        this.reason = reason;
     }
 
-    public ApiError(HttpStatus httpStatus) {
+    public ApiError(HttpStatus httpStatus, String reason) {
         this.status = httpStatus.value();
         this.message = httpStatus.name();
+        this.reason = reason;
     }
 
-    public void addFieldError(String objectName, String path, String message) {
-        FieldError fe = new FieldError(objectName, path, message);
+    public void addFieldError(FieldError fieldError) {
+        CustomFieldError fe = new CustomFieldError(fieldError.getField(), fieldError.getDefaultMessage());
         fieldErrors.add(fe);
     }
 
@@ -36,7 +37,7 @@ public class ApiError {
         return message;
     }
 
-    public List<FieldError> getFieldErrors() {
+    public List<CustomFieldError> getFieldErrors() {
         return fieldErrors;
     }
 }

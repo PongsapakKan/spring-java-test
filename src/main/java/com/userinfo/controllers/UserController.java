@@ -1,18 +1,15 @@
 package com.userinfo.controllers;
 
-import com.userinfo.exceptions.DBNotFoundException;
-import com.userinfo.exceptions.DuplicateUsernameException;
-import com.userinfo.exceptions.InvalidPasswordException;
+import com.userinfo.exceptions.FieldValidationException;
 import com.userinfo.models.api.requests.UserCredentials;
 import com.userinfo.models.api.requests.UserRegistration;
-import com.userinfo.models.api.response.ApiError;
 import com.userinfo.models.api.response.LoginResponse;
 import com.userinfo.models.api.response.UserResponse;
 import com.userinfo.models.entities.MemberType;
 import com.userinfo.models.entities.User;
 import com.userinfo.services.UserService;
-import com.userinfo.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.Errors;
@@ -29,40 +26,34 @@ import java.util.stream.Collectors;
 public class UserController {
     @Autowired
     private UserService userService;
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
 
     @PostMapping("/users")
-    public UserResponse register(@RequestBody @Valid UserRegistration registration, Errors errors) {
-        User u = convertToEntity(registration);
-        try {
-            return convertToResponse(userService.createUser(u));
-        } catch (DuplicateUsernameException ex) {
-            throw new IllegalArgumentException("");
+    public ResponseEntity<?> register(@RequestBody @Valid UserRegistration registration, Errors errors) {
+        if (errors.hasErrors()) {
+            throw new FieldValidationException(errors.getFieldErrors());
         }
+
+        User u = convertToEntity(registration);
+        return new ResponseEntity<>(convertToResponse(userService.createUser(u)), HttpStatus.CREATED);
     }
 
     @GetMapping("/users/{id}")
-    public UserResponse getUser(@PathVariable("id") String  id) throws IllegalArgumentException {
-        return convertToResponse(userService.getUser(UUID.fromString(id)));
+    public ResponseEntity<?> getUser(@PathVariable("id") String  id) throws IllegalArgumentException {
+        return new ResponseEntity<>(convertToResponse(userService.getUser(UUID.fromString(id))), HttpStatus.OK);
     }
 
     @GetMapping("/users")
-    public List<UserResponse> getUsers() throws IllegalArgumentException {
+    public ResponseEntity<?> getUsers() throws IllegalArgumentException {
         List<UserResponse> list = userService.getUsers().stream().map(this::convertToResponse).collect(Collectors.toList());
-        return list;
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @PostMapping("/login")
-    public LoginResponse login(@RequestBody UserCredentials UserCredentials) {
-        try {
-            String token = userService.login(UserCredentials.getUsername(), UserCredentials.getPassword());
-            LoginResponse lr = new LoginResponse();
-            lr.setToken(token);
-            return lr;
-        } catch (DBNotFoundException | InvalidPasswordException ex) {
-            throw new IllegalArgumentException("TESTETST");
-        }
+    public ResponseEntity<?> login(@RequestBody UserCredentials UserCredentials) {
+        String token = userService.login(UserCredentials.getUsername(), UserCredentials.getPassword());
+        LoginResponse lr = new LoginResponse();
+        lr.setToken(token);
+        return new ResponseEntity<>(lr, HttpStatus.OK);
     }
 
     private User convertToEntity(UserRegistration registration) {

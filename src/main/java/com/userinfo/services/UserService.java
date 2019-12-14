@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface UserService {
-    User createUser(User user) throws DuplicateUsernameException;
+    User createUser(User user);
     User getUser(UUID id);
     List<User> getUsers();
     User getByUsername(String username) throws DBNotFoundException;

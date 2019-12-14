@@ -5,8 +5,8 @@ import com.userinfo.exceptions.DuplicateUsernameException;
 import com.userinfo.exceptions.InvalidPasswordException;
 import com.userinfo.models.entities.User;
 import com.userinfo.repositories.UserRepository;
+import com.userinfo.security.jwt.JwtTokenProvider;
 import com.userinfo.services.UserService;
-import com.userinfo.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,14 +21,14 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
-   private BCryptPasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder passwordEncoder;
 
 
     @Override
-    public User createUser(User user) throws DuplicateUsernameException {
+    public User createUser(User user) {
         Optional<User> ou = userRepository.findOneByUsername(user.getUsername());
         if (ou.isPresent())
             throw new DuplicateUsernameException();
@@ -66,6 +66,6 @@ public class UserServiceImpl implements UserService {
         if (!passwordEncoder.matches(password, user.getPassword()))
             throw new InvalidPasswordException("Wrong password.");
 
-        return jwtTokenUtil.generateToken(username);
+        return jwtTokenProvider.createToken(username);
     }
 }
