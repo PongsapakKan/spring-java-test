@@ -27,7 +27,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/users")
+    @PostMapping("/api/users")
     public ResponseEntity<?> register(@RequestBody @Valid UserRegistration registration, Errors errors) {
         if (errors.hasErrors()) {
             throw new FieldValidationException(errors.getFieldErrors());
@@ -36,17 +36,17 @@ public class UserController {
         return new ResponseEntity<>(convertToResponse(userService.createUser(u)), HttpStatus.CREATED);
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/api/users/{id}")
     public ResponseEntity<?> getUser(@PathVariable("id") String id) {
         return new ResponseEntity<>(convertToResponse(userService.getUser(UUID.fromString(id))), HttpStatus.OK);
     }
 
-    @GetMapping("/users/me")
+    @GetMapping("/api/users/me")
     public ResponseEntity<?> whoami(HttpServletRequest req) {
         return new ResponseEntity<>(convertToResponse(userService.getUserByToken(req)), HttpStatus.OK);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/api/login")
     public ResponseEntity<?> login(@RequestBody UserCredentials UserCredentials) {
         String token = userService.login(UserCredentials.getUsername(), UserCredentials.getPassword());
         LoginResponse lr = new LoginResponse();
@@ -70,7 +70,6 @@ public class UserController {
         SimpleDateFormat format = new SimpleDateFormat("YYYYMMdd");
         Date now = new Date();
         user.setRegisterDate(now);
-        System.out.println(format.format(now));
         user.setReferenceCode(format.format(now) + registration.getPhoneNo().substring(registration.getPhoneNo().length() - 4));
         return user;
     }
@@ -84,6 +83,7 @@ public class UserController {
         ur.setPhoneNo(user.getPhoneNo());
         ur.setReferenceCode(user.getReferenceCode());
         ur.setMemberClassify(user.getMemberClassification().name());
+        ur.setSalary(user.getSalary());
         return ur;
     }
 }

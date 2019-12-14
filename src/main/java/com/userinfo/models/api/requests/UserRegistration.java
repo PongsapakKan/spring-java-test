@@ -9,22 +9,22 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 public class UserRegistration {
-    @NotNull @NotBlank @Length(min = 5)
+    @NotNull @Length(min = 5)
     @Pattern(regexp = "[A-Za-z0-9]*", message = "Username cannot have special character.")
     private String username;
-    @NotNull @NotBlank @Length(min = 5)
+    @NotNull @Length(min = 5)
     @Pattern(regexp = "[A-Za-z0-9]*", message = "Password cannot have special character.")
     private String password;
 
-    @NotNull @NotBlank @Length(min = 3)
+    @NotNull @Length(min = 3)
     @Pattern(regexp = "[A-Za-z]*", message = "First name must be alphabet.")
     private String firstName;
 
-    @NotNull @NotBlank @Length(min = 3)
+    @NotNull @Length(min = 3)
     @Pattern(regexp = "[A-Za-z]*", message = "Last name must be alphabet.")
     private String lastName;
 
-    @NotNull @NotBlank @Length(min = 5)
+    @NotNull @Length(min = 5)
     private String address;
 
     @NotNull

@@ -56,6 +56,10 @@ public class User implements UserDetails {
         return id;
     }
 
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -130,8 +134,8 @@ public class User implements UserDetails {
         this.registerDate = registerDate;
     }
 
-    public void setMemberClassification(MemberClassification memberType) {
-        this.memberClassification = memberType;
+    public void setMemberClassification(MemberClassification memberClassification) {
+        this.memberClassification = memberClassification;
     }
 
     @Override

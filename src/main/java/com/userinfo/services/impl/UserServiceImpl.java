@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
         if (token == null)
             throw new InvalidTokenException("Invalid Token.");
 
-        String username = jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req));
+        String username = jwtTokenProvider.getUsername(token);
 
         Optional<User> ou = userRepository.findOneByUsername(username);
         if (!ou.isPresent())

@@ -8,6 +8,10 @@ public class UserResponse {
     private String phoneNo;
     private String address;
     private String memberClassify;
+    private int salary;
+
+    public UserResponse() {
+    }
 
     public String getId() {
         return id;
@@ -61,7 +65,15 @@ public class UserResponse {
         return memberClassify;
     }
 
-    public void setMemberClassify(String UserType) {
-        this.memberClassify = UserType;
+    public void setMemberClassify(String memberClassify) {
+        this.memberClassify = memberClassify;
+    }
+
+    public int getSalary() {
+        return salary;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
     }
 }

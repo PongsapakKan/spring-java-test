@@ -124,7 +124,6 @@ public class UserServiceTest {
         String mockToken = "mock";
         HttpServletRequest req = mock(HttpServletRequest.class);
         User u = mock(User.class);
-        when(req.getHeader("Authorization")).thenReturn(mockToken);
         when(userRepository.findOneByUsername(anyString())).thenReturn(Optional.of(u));
         when(jwtTokenProvider.resolveToken(req)).thenReturn(mockToken);
         when(jwtTokenProvider.getUsername(mockToken)).thenReturn("username");
@@ -140,11 +139,8 @@ public class UserServiceTest {
         String mockToken = "mock";
         HttpServletRequest req = mock(HttpServletRequest.class);
         User u = mock(User.class);
-        when(req.getHeader("Authorization")).thenReturn(mockToken);
-        when(userRepository.findOneByUsername(anyString())).thenReturn(Optional.of(u));
         when(jwtTokenProvider.resolveToken(req)).thenReturn(null);
         userService.getUserByToken(req);
-        verify(userRepository).findOneByUsername(anyString());
         verify(jwtTokenProvider).resolveToken(req);
     }
 
@@ -153,7 +149,6 @@ public class UserServiceTest {
         String mockToken = "mock";
         HttpServletRequest req = mock(HttpServletRequest.class);
         User u = mock(User.class);
-        when(req.getHeader("Authorization")).thenReturn(mockToken);
         when(userRepository.findOneByUsername(anyString())).thenReturn(Optional.empty());
         when(jwtTokenProvider.resolveToken(req)).thenReturn(mockToken);
         when(jwtTokenProvider.getUsername(mockToken)).thenReturn("username");
