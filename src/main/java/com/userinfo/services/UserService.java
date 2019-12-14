@@ -1,18 +1,15 @@
 package com.userinfo.services;
 
 import com.userinfo.exceptions.DBNotFoundException;
-import com.userinfo.exceptions.DuplicateUsernameException;
-import com.userinfo.exceptions.InvalidPasswordException;
+import com.userinfo.exceptions.WrongPasswordException;
 import com.userinfo.models.entities.User;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
 public interface UserService {
     User createUser(User user);
     User getUser(UUID id);
-    List<User> getUsers();
-    User getByUsername(String username) throws DBNotFoundException;
-    User getByUsernameAndPassword(String username, String password) throws DBNotFoundException;
-    String login(String username, String password) throws DBNotFoundException, InvalidPasswordException;
+    User getUserByToken(HttpServletRequest req);
+    String login(String username, String password) throws DBNotFoundException, WrongPasswordException;
 }

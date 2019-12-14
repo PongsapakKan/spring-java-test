@@ -1,13 +1,13 @@
 package com.userinfo.security.jwt;
 
 import com.userinfo.exceptions.InvalidTokenException;
+import com.userinfo.models.entities.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +20,7 @@ import java.util.Date;
 
 @Component
 public class JwtTokenProvider {
-  @Value("${security.jwt.token.secret-key:secret-key}")
+  @Value("${security.jwt.token.secret-key}")
   private String secretKey;
 
   @Value("${security.jwt.token.expire-length:3600000}")
@@ -34,18 +34,19 @@ public class JwtTokenProvider {
     secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
   }
 
-  public String createToken(String username) {
+  public String createToken(User user) {
 
-    Claims claims = Jwts.claims().setSubject(username);
+    Claims claims = Jwts.claims().setSubject(user.getUsername());
+    claims.put("auth", user.getAuthorities());
 
     Date now = new Date();
     Date validity = new Date(now.getTime() + validityInMilliseconds);
 
-    return Jwts.builder()//
-        .setClaims(claims)//
-        .setIssuedAt(now)//
-        .setExpiration(validity)//
-        .signWith(SignatureAlgorithm.HS256, secretKey)//
+    return Jwts.builder()
+        .setClaims(claims)
+        .setIssuedAt(now)
+        .setExpiration(validity)
+        .signWith(SignatureAlgorithm.HS256, secretKey)
         .compact();
   }
 

@@ -12,12 +12,6 @@ public class ApiError {
     private final String reason;
     private List<CustomFieldError> fieldErrors = new ArrayList<>();
 
-    public ApiError(String message, int status, String reason) {
-        this.status = status;
-        this.message = message;
-        this.reason = reason;
-    }
-
     public ApiError(HttpStatus httpStatus, String reason) {
         this.status = httpStatus.value();
         this.message = httpStatus.name();
@@ -35,6 +29,10 @@ public class ApiError {
 
     public String getMessage() {
         return message;
+    }
+
+    public String getReason() {
+        return reason;
     }
 
     public List<CustomFieldError> getFieldErrors() {

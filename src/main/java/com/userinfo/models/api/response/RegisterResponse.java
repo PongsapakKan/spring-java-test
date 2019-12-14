@@ -1,13 +1,14 @@
 package com.userinfo.models.api.response;
 
-public class UserResponse {
+public class RegisterResponse {
     private String id;
     private String firstName;
     private String lastName;
     private String referenceCode;
     private String phoneNo;
     private String address;
-    private String memberClassify;
+    private String MemberClassify;
+    private String accessToken;
 
     public String getId() {
         return id;
@@ -58,10 +59,18 @@ public class UserResponse {
     }
 
     public String getMemberClassify() {
-        return memberClassify;
+        return MemberClassify;
     }
 
-    public void setMemberClassify(String UserType) {
-        this.memberClassify = UserType;
+    public void setMemberClassify(String memberClassify) {
+        MemberClassify = memberClassify;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 }

@@ -2,18 +2,15 @@ package com.userinfo.models.entities;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
-    private static final SimpleDateFormat formatter = new SimpleDateFormat("YYYYMMDD");
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
@@ -49,7 +46,11 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private MemberType.Classification memberType;
+    private MemberClassification memberClassification;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
     public UUID getId() {
         return id;
@@ -89,8 +90,8 @@ public class User implements UserDetails {
         return registerDate;
     }
 
-    public String getMemberType() {
-        return memberType.toString();
+    public MemberClassification getMemberClassification() {
+        return memberClassification;
     }
 
     public void setUsername(String username) {
@@ -129,8 +130,8 @@ public class User implements UserDetails {
         this.registerDate = registerDate;
     }
 
-    public void setMemberType(MemberType.Classification memberType) {
-        this.memberType = memberType;
+    public void setMemberClassification(MemberClassification memberType) {
+        this.memberClassification = memberType;
     }
 
     @Override
@@ -153,9 +154,19 @@ public class User implements UserDetails {
         return false;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+    public Role getRole() {
+        return role;
     }
 
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        Role roleName = this.getRole();
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + roleName));
+        return authorities;
+    }
 }
