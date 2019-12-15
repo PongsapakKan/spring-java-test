@@ -40,12 +40,16 @@ public class UserConverterImpl implements UserConverter {
         user.setSalary(registration.getSalary());
         user.setMemberClassification(MemberClassification.valueOf(registration.getSalary()));
         user.setRole(Role.USER);
-        SimpleDateFormat format = new SimpleDateFormat("YYYYMMdd");
         LocalDateTime ldt = LocalDateTime.now(clock);
         Date now = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
         user.setRegisterDate(now);
-        user.setReferenceCode(format.format(now) + registration.getPhoneNo().substring(registration.getPhoneNo().length() - 4));
+        user.setReferenceCode(buildReferenceCode(now, registration.getPhoneNo()));
         return user;
+    }
+
+    private String buildReferenceCode(Date date, String phoneNo) {
+        SimpleDateFormat format = new SimpleDateFormat("YYYYMMdd");
+        return format.format(date) + phoneNo.substring(phoneNo.length() - 4);
     }
 
     @Override
