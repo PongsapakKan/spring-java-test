@@ -56,7 +56,6 @@ public class UserRepositoryTest {
     @Test
     public void findOneByUsernameNotExistsUser() {
         Optional<User> ou = userRepository.findOneByUsername("test");
-        System.out.println(ou);
         assertThat(ou.isPresent()).isFalse();
     }
 }
