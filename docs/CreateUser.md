@@ -30,7 +30,7 @@ Field Rule
 |password   |Min length 5<br>Must be Alphabet or Number |
 |firstName  |Min length 3<br>Must be Alphabet |
 |lastName   |Min length 3<br>Must be Alphabet |
-|phoneNo	|Must be number and have 9 or 10 digits |
+|phoneNo	|Must be number and have at least 4 digits |
 |address    |-  |
 |salary		|Must greater or equal than 15000 |
 

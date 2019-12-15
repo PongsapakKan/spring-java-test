@@ -28,7 +28,7 @@ public class UserRegistration {
     private String address;
 
     @NotNull
-    @Pattern(regexp = "\\d{9,10}", message = "Phone number must be number and have 9 or 10 digits.")
+    @Pattern(regexp = "[0-9]{4,}", message = "Phone number must be number and have at least 4 digits.")
     private String phoneNo;
     @NotNull
     @Min(value = 15000, message = "Salary must greater or equal than 15000.")
