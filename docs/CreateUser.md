@@ -8,6 +8,7 @@ POST /api/users
 
 ### Request Body
 Rules
+
 |Field Name |Rules |
 |-----------|------|
 |username   |Min length 5<br>Must be Alphabet or Number |
