@@ -24,7 +24,7 @@ public class UserRegistration {
     @Pattern(regexp = "[A-Za-z]*", message = "Last name must be alphabet.")
     private String lastName;
 
-    @NotNull @Length(min = 5)
+    @NotNull
     private String address;
 
     @NotNull
