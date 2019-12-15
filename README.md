@@ -1,3 +1,6 @@
+# User Service
+This's a service that can create and read user data.
+
 ## Installation Guide
 * Ensure you have install ``` java jdk 1.8 ``` and ``` maven 3.x.x ```
 * Build project by command ``` mvn clean package ```
@@ -12,35 +15,14 @@
 ```
 
 ## Usage
-
-### Create User
-Request endpoint
+### Journey
+First you have to create a user then log in with username and password and you can retrieve your data.
 ```
-POST  /api/users
-```
-Request Body (Example Data)
-```json
-{
-	"username": "newuser",
-	"password": "password",
-	"firstName": "firstname",
-	"lastName": "lastname",
-	"address": "some address",
-	"phoneNo": "089797997",
-	"salary": 36000
-}
+CreateUser => Login => GetUserFromToken
 ```
 
-Response Data
-```json
-{
-    "id": "615992cd-6990-4359-aa03-9e58f7f80a8e",
-    "firstName": "firstname",
-    "lastName": "lastname",
-    "referenceCode": "201912157997",
-    "phoneNo": "089797997",
-    "address": "some address",
-    "memberClassify": "Gold",
-    "salary": 36000
-}
-```
+### APIs
+There are 3 APIs in this service.
+- [Create User](./docs/CreateUser.md)
+- [Login](./docs/Login.md)
+- [GetUserFromToken](./docs/GetUserFromToken.md)

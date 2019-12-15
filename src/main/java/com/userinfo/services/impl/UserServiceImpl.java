@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String login(String username, String password) throws DBNotFoundException, WrongPasswordException {
+    public String login(String username, String password) {
         Optional<User> ou = userRepository.findOneByUsername(username);
         if (!ou.isPresent()) {
             throw new DBNotFoundException("User not found.");

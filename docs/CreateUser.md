@@ -7,17 +7,8 @@ POST /api/users
 ```
 
 ### Request Body
-Rules
 
-|Field Name |Rules |
-|-----------|------|
-|username   |Min length 5<br>Must be Alphabet or Number |
-|password   |Min length 5<br>Must be Alphabet |
-|firstName  |Min length 3<br>Must be Alphabet |
-|lastName   |Min length 3<br>Must be Alphabet |
-|phoneNo	|Must be number and have 9 or 10 digits |
-|salary		|Must greater or equal than 15000 |
-
+Sample Data
 ```json
 {
 	"username": "newuser",
@@ -29,6 +20,19 @@ Rules
 	"salary": 36000
 }
 ```
+
+Field Rule 
+
+
+|Field Name |Rules |
+|-----------|------|
+|username   |Min length 5<br>Must be Alphabet or Number |
+|password   |Min length 5<br>Must be Alphabet or Number |
+|firstName  |Min length 3<br>Must be Alphabet |
+|lastName   |Min length 3<br>Must be Alphabet |
+|phoneNo	|Must be number and have 9 or 10 digits |
+|address    |-  |
+|salary		|Must greater or equal than 15000 |
 
 ### Response data
 ```json

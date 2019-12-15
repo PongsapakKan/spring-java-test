@@ -36,6 +36,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
       SecurityContextHolder.clearContext();
       httpServletResponse.getWriter().write(convertObjectToJson(new ErrorResponse(HttpStatus.FORBIDDEN, ex.getMessage())));
       httpServletResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
+      httpServletResponse.setStatus(HttpStatus.FORBIDDEN.value());
       return;
     }
 

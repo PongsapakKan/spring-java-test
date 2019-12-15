@@ -1,16 +1,11 @@
-spring:
-  datasource:
-    url: ${MYSQL_URL:jdbc:mysql://localhost:3306/db_example?useUnicode=true&characterEncoding=UTF-8&useSsl=false}
-    username: ${MYSQL_USERNAME:root}
-    password: ${MYSQL_PASSWORD:1234}
-    driverClassName: com.mysql.cj.jdbc.Driver
+jdbc:
+  driverClassName: org.h2.Driver
+  url: jdbc:h2:mem:user_db;DB_CLOSE_DELAY=-1
 
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL5Dialect
+hibernate:
+  dialect: org.hibernate.dialect.H2Dialect
+  hbm2ddl:
+    auto: create
 
 security:
   jwt:

@@ -11,5 +11,5 @@ public interface UserService {
     User createUser(User user);
     User getUser(UUID id);
     User getUserByToken(HttpServletRequest req);
-    String login(String username, String password) throws DBNotFoundException, WrongPasswordException;
+    String login(String username, String password);
 }
