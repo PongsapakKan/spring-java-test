@@ -59,6 +59,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(SalaryNotMatchClassifyException.class)
+    public ResponseEntity<ApiError> handleSalaryNotMatchClassifyException(SalaryNotMatchClassifyException ex) {
+        logger.error(ex.getMessage());
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage());
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ApiError> handleAccessDeniedException(AccessDeniedException ex) {
         logger.error(ex.getMessage());
