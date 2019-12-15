@@ -1,6 +1,11 @@
 package com.userinfo.security.jwt;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.userinfo.exceptions.InvalidTokenException;
+import com.userinfo.models.api.response.error.ErrorResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -29,10 +34,19 @@ public class JwtTokenFilter extends OncePerRequestFilter {
       }
     } catch (InvalidTokenException ex) {
       SecurityContextHolder.clearContext();
-      throw ex;
+      httpServletResponse.getWriter().write(convertObjectToJson(new ErrorResponse(HttpStatus.FORBIDDEN, ex.getMessage())));
+      httpServletResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
+      return;
     }
 
     filterChain.doFilter(httpServletRequest, httpServletResponse);
   }
 
+  String convertObjectToJson(Object object) throws JsonProcessingException {
+    if (object == null) {
+      return null;
+    }
+    ObjectMapper mapper = new ObjectMapper();
+    return mapper.writeValueAsString(object);
+  }
 }

@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: ${MYSQL_URL:{jdbc:mysql://localhost:3306/db_example?useUnicode=true&characterEncoding=UTF-8&useSsl=false}}
-    username: ${MYSQL_USERNAME:{root}}
-    password: ${MYSQL_PASSWORD:{1234}}
+    url: ${MYSQL_URL:jdbc:mysql://localhost:3306/db_example?useUnicode=true&characterEncoding=UTF-8&useSsl=false}
+    username: ${MYSQL_USERNAME:root}
+    password: ${MYSQL_PASSWORD:1234}
     driverClassName: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -15,5 +15,5 @@ spring:
 security:
   jwt:
     token:
-      secret-key: ${JWT_SECRET_KEY:{somethingsecret}}
-      expire-length: ${JWT_EXPIRE_LENGTH:{300000}}}
+      secret-key: ${JWT_SECRET_KEY:somethingsecret}
+      expire-length: ${JWT_EXPIRE_LENGTH:300000}

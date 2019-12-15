@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
     public String login(String username, String password) throws DBNotFoundException, WrongPasswordException {
         Optional<User> ou = userRepository.findOneByUsername(username);
         if (!ou.isPresent()) {
-            throw new DBNotFoundException("");
+            throw new DBNotFoundException("User not found.");
         }
         User user = ou.get();
         if (!passwordEncoder.matches(password, user.getPassword()))
