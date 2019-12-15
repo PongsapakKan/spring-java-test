@@ -1,10 +1,10 @@
 # User Service
-This's a service that can create and read user data.
+This's a service that can create and read user data. The data will store in in-memory database(H2).
 
 ## Installation Guide
-* Ensure you have install ``` java jdk 1.8 ``` and ``` maven 3.x.x ```
-* Build project by command ``` mvn clean package ```
-* To run service
+* Ensure you have install `java jdk 1.8`  and `maven 3.x.x`
+* Build project by command `mvn clean package`
+* To run service (The service will run on port `8080`)
 ```
   java -jar target/userinfo-0.0.1-SNAPSHOT.jar
 ```
