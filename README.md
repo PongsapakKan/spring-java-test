@@ -21,6 +21,8 @@ First you have to create a user then log in with username and password and you c
 CreateUser => Login => GetUserFromToken
 ```
 
+You can use postman by this [collection](./krungsri-test.postman_collection.json)
+
 ### APIs
 There are 3 APIs in this service.
 - [Create User](./docs/CreateUser.md)

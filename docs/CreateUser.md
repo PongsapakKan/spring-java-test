@@ -26,7 +26,7 @@ Field Rule
 
 |Field Name |Rules |
 |-----------|------|
-|username   |Min length 5<br>Must be Alphabet or Number |
+|username   |Min length 5<br>Must be Alphabet or Number<br>Cannot duplicate |
 |password   |Min length 5<br>Must be Alphabet or Number |
 |firstName  |Min length 3<br>Must be Alphabet |
 |lastName   |Min length 3<br>Must be Alphabet |
