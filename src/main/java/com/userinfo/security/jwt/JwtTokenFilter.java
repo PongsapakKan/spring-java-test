@@ -43,7 +43,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     filterChain.doFilter(httpServletRequest, httpServletResponse);
   }
 
-  String convertObjectToJson(Object object) throws JsonProcessingException {
+  private String convertObjectToJson(Object object) throws JsonProcessingException {
     if (object == null) {
       return null;
     }

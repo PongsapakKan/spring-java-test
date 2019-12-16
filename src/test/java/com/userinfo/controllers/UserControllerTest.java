@@ -312,67 +312,6 @@ public class UserControllerTest {
         result.andExpect(status().isBadRequest());
     }
 
-    @Test
-    public void testGetUserSuccessfully() throws Exception {
-        UUID id = UUID.randomUUID();
-        User user = mock(User.class);
-        UserResponse userResponse = new UserResponse();
-        userResponse.setPhoneNo("0000000000");
-        userResponse.setFirstName("firstname");
-        userResponse.setLastName("lastname");
-        userResponse.setAddress("some address");
-        userResponse.setReferenceCode("201908080000");
-        userResponse.setMemberClassify("Gold");
-        userResponse.setSalary(30000);
-
-        when(userConverter.convertUserToUserResponse(any(User.class))).thenReturn(userResponse);
-        when(userService.getUser(id)).thenReturn(user);
-
-        RequestBuilder request = MockMvcRequestBuilders.get("/api/users/" + id.toString())
-                .contentType(MediaType.APPLICATION_JSON);
-
-        ResultActions result = mockMvc.perform(request);
-
-        result.andExpect(status().isOk()).andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("firstname"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value("lastname"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.address").value("some address"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.phoneNo").value("0000000000"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.referenceCode").value("201908080000"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.memberClassify").value("Gold"))
-                .andReturn();
-
-        verify(userService).getUser(id);
-        verify(userConverter).convertUserToUserResponse(user);
-    }
-
-    @Test
-    public void testGetUserFailWithNotFound() throws Exception {
-        UUID id = UUID.randomUUID();
-        User user = new User();
-        user.setId(id);
-        user.setPhoneNo("0000000000");
-        user.setUsername("username");
-        user.setPassword("password");
-        user.setFirstName("firstname");
-        user.setLastName("lastname");
-        user.setAddress("some address");
-        user.setReferenceCode("201908080000");
-        user.setMemberClassification(MemberClassification.Gold);
-        user.setSalary(30000);
-        user.setRole(Role.USER);
-        user.setRegisterDate(new Date());
-
-        when(userService.getUser(id)).thenThrow(new DBNotFoundException("User not found."));
-
-        RequestBuilder request = MockMvcRequestBuilders.get("/api/users/" + id.toString())
-                .contentType(MediaType.APPLICATION_JSON);
-
-        ResultActions result = mockMvc.perform(request);
-
-        result.andExpect(status().isNotFound());
-
-        verify(userService).getUser(id);
-    }
 
     @Test
     public void testGetMeSuccessfully() throws Exception {

@@ -63,25 +63,6 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getUserSuccessfully() {
-        UUID uuid = UUID.randomUUID();
-        User u = mock(User.class);
-        when(userRepository.findById(uuid)).thenReturn(Optional.of(u));
-        User userResponse = userService.getUser(uuid);
-        assertThat(userResponse).isEqualTo(u);
-        verify(userRepository).findById(uuid);
-    }
-
-    @Test(expected = DBNotFoundException.class)
-    public void getUserFailureWithNotFoundUser() {
-        UUID uuid = UUID.randomUUID();
-        User u = mock(User.class);
-        when(userRepository.findById(uuid)).thenReturn(Optional.empty());
-        userService.getUser(uuid);
-        verify(userRepository).findById(uuid);
-    }
-
-    @Test
     public void loginWithUsernamePasswordSuccess() {
         String username = "testUsername";
         String password = "password";

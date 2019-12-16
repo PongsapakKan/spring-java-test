@@ -37,14 +37,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(UUID id) {
-        Optional<User> ou = userRepository.findById(id);
-        if (!ou.isPresent())
-            throw new DBNotFoundException("User not found.");
-        return ou.get();
-    }
-
-    @Override
     public User getUserByToken(HttpServletRequest req) {
         String token = jwtTokenProvider.resolveToken(req);
         if (token == null)

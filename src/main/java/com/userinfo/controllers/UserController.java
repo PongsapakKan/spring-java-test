@@ -34,11 +34,6 @@ public class UserController {
         return new ResponseEntity<>(userConverter.convertUserToUserResponse(userService.createUser(u)), HttpStatus.CREATED);
     }
 
-    @GetMapping("/api/users/{id}")
-    public ResponseEntity<?> getUser(@PathVariable("id") String id) {
-        return new ResponseEntity<>(userConverter.convertUserToUserResponse(userService.getUser(UUID.fromString(id))), HttpStatus.OK);
-    }
-
     @GetMapping("/api/users/me")
     public ResponseEntity<?> whoami(HttpServletRequest req) {
         return new ResponseEntity<>(userConverter.convertUserToUserResponse(userService.getUserByToken(req)), HttpStatus.OK);
